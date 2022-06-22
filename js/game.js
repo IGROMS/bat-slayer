@@ -4,6 +4,7 @@ class Game {
     //this.background = new Background(this.ctx);
     this.intervalId = null;
     this.player = new Player(this.ctx);
+    this.platform = new Platform(this.ctx)
     this.tick = 0
   }
 
@@ -12,8 +13,8 @@ class Game {
       this.clear()
       //this.addObstacle()
       this.draw()
-      //this.checkCollisions()
       this.move()
+      this.checkCollisions()
     }, 1000 / 60)
   }
 
@@ -23,10 +24,22 @@ class Game {
 
   draw() {
     this.player.draw()
+    this.platform.draw()
   }
 
   move() {
     this.player.move()
+  }
+
+  checkCollisions() {
+    if(this.platform.collide(this.player)) {
+      if(this.platform.collideTop(this.player)) {
+        this.player.maxY = this.platform.y
+        this.player.y = this.platform.y - this.player.height
+      }
+    } else {
+      this.player.maxY = this.ctx.canvas.height
+    }
   }
 
 }

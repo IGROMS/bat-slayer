@@ -1,13 +1,14 @@
 class Player {
   constructor() {
     this.ctx = ctx;
-    this.width = 100;
-    this.height = 100;
+    this.width = 50;
+    this.height = 50;
     this.x = 30;
     this.y = this.ctx.canvas.height - this.height;
     this.vy = 0;
     this.vx = 0;
-    this.g = 0//0.98;
+    this.g = 1;
+    this.maxY = this.ctx.canvas.height;
     this.actions =  {
       up : false,
       right: false,
@@ -27,17 +28,24 @@ class Player {
   }
 
   isFloor() {
-    return this.y + this.h >= this.ctx.canvas.height; 
+    return this.y + this.height >= this.maxY && this.vy >= 0; 
   }
 
   move() {
     this.applyActions()
-    this.vy += this.g;
-    this.y += this.vy;
+
     this.x += this.vx;
+    this.y += this.vy;
+    this.vy += this.g;
     if(this.isFloor()) {
-      this.y = this.ctx.canvas.height - this.h;
+      this.y = this.maxY - this.height;
       this.vy = 0;
+    }
+    if (this.x <= 0){
+      this.x = 0
+    }
+    if (this.x + this.width >= this.ctx.canvas.width) {
+      this.x = this.ctx.canvas.width - this.width
     }
   }
 
@@ -47,14 +55,14 @@ class Player {
   }
 
   applyActions() {
-    if(this.y >= 0 && this.actions.up) {
-      this.vy += -0.4
-    }
-    if(this.actions.right) {
-      this.vx = 1
-    }
-    if(this.actions.left) {
-      this.vx = -1
+    if( this.isFloor() && this.actions.up) {
+      this.vy = -20
+    } else if(this.actions.right) {
+      this.vx = 8
+    } else if(this.actions.left) {
+      this.vx = -8
+    } else {
+      this.vx = 0;
     }
   }
 
