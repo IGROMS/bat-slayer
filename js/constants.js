@@ -1,0 +1,5 @@
+UP = 87
+RIGHT = 68
+LEFT = 65
+SPACE = 32
+FLOOR = 32
