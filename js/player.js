@@ -34,6 +34,7 @@ class Player {
     this.applyActions()
     this.vy += this.g;
     this.y += this.vy;
+    this.x += this.vx;
     if(this.isFloor()) {
       this.y = this.ctx.canvas.height - this.h;
       this.vy = 0;
