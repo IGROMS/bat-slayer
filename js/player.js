@@ -14,6 +14,7 @@ class Player {
       left: false,
       shoot : false,
     }
+    this.setListeners()
   }
 
   draw() {
@@ -59,7 +60,6 @@ class Player {
   switchAction(key, apply) {
     switch(key) {
       case UP:
-        console.log('hola');
         this.actions.up = apply;
         break;
       case RIGHT:
