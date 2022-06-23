@@ -36,6 +36,7 @@ class Player {
       this.width,
       this.height
     )
+    this.animate()
   }
 
   isFloor() {
@@ -60,6 +61,28 @@ class Player {
     }
   }
 
+  animate() {
+    this.tick++
+    if (this.actions.right){
+    if(this.tick >= 10) {
+      this.tick = 0
+      this.img.frameIndex++
+      }
+    if(this.img.frameIndex >= 4){
+      this.img.frameIndex = 0;
+    }}
+
+    if (this.actions.up){
+      if(this.tick >= 10) {
+        this.tick = 0
+        this.img.frameIndex++
+        }
+      if(this.img.frameIndex >= 4){
+        this.img.frameIndex = 0;
+      }}
+
+  }
+
   setListeners() {
     document.onkeydown = e => this.switchAction(e.keyCode, true)
     document.onkeyup = e => this.switchAction(e.keyCode, false)
@@ -69,9 +92,9 @@ class Player {
     if( this.isFloor() && this.actions.up) {
       this.vy = -20
     } else if(this.actions.right) {
-      this.vx = 8
+      this.vx = 4
     } else if(this.actions.left) {
-      this.vx = -8
+      this.vx = -4
     } else {
       this.vx = 0;
     }
