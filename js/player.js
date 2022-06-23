@@ -1,8 +1,8 @@
 class Player {
   constructor() {
     this.ctx = ctx;
-    this.width = 50;
-    this.height = 50;
+    this.width = 252;
+    this.height = 54;
     this.x = 30;
     this.y = this.ctx.canvas.height - this.height;
     this.vy = 0;
@@ -15,11 +15,22 @@ class Player {
       left: false,
       shoot : false,
     }
+
+    this.img = new Image();
+    this.img.src = "/img/Hero/player_sprite.png";
+    this.img.frames = 14;
+    this.img.frameIndex = 0;
+    this.tick = 0;
     this.setListeners()
   }
 
   draw() {
-    this.ctx.fillRect(
+    this.ctx.drawImage(
+      this.img,
+      0,
+      this.img.frameIndex * this.img.height / this.img.frames,
+      this.img.width / 5,
+      this.img.height / this.img.frames,
       this.x,
       this.y,
       this.width,
