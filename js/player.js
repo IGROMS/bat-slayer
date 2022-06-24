@@ -15,6 +15,7 @@ class Player {
       left: false,
       shoot : false,
     }
+    this.isJumping = false;
 
     this.img = new Image();
     this.img.src = "/img/Hero/player_sprite.png";
@@ -25,17 +26,40 @@ class Player {
   }
 
   draw() {
-    this.ctx.drawImage(
-      this.img,
-      0,
-      this.img.frameIndex * this.img.height / this.img.frames,
-      this.img.width / 5,
-      this.img.height / this.img.frames,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-    )
+    if (this.actions.right){
+      this.ctx.drawImage(
+        this.img,
+        0,
+        this.img.frameIndex * this.img.height / this.img.frames,
+        this.img.width / 5,
+        this.img.height / this.img.frames,
+        this.x,
+        this.y,
+        this.width,
+        this.height)
+      } else if (this.actions.up) {
+      this.ctx.drawImage(
+        this.img,
+        252,
+        this.img.frameIndex * this.img.height / this.img.frames,
+        this.img.width / 5,
+        this.img.height / this.img.frames,
+        this.x,
+        this.y,
+        this.width,
+        this.height)
+    } else {
+      this.ctx.drawImage(
+        this.img,
+        0,
+        this.img.frameIndex * this.img.height / this.img.frames,
+        this.img.width / 5,
+        this.img.height / this.img.frames,
+        this.x,
+        this.y,
+        this.width,
+        this.height)
+    }
     this.animate()
   }
 
@@ -63,17 +87,16 @@ class Player {
 
   animate() {
     this.tick++
-    if (this.actions.right){
-    if(this.tick >= 10) {
-      this.tick = 0
-      this.img.frameIndex++
-      }
-    if(this.img.frameIndex >= 4){
-      this.img.frameIndex = 0;
-    }}
-
     if (this.actions.up){
-      if(this.tick >= 10) {
+      if(this.tick >= 8) {
+        this.tick = 0
+        this.img.frameIndex++
+        }
+      if(this.img.frameIndex >= 8){
+        this.img.frameIndex = 0;
+      }}
+    if (this.actions.right){
+      if(this.tick >= 4) {
         this.tick = 0
         this.img.frameIndex++
         }
@@ -103,6 +126,13 @@ class Player {
   switchAction(key, apply) {
     switch(key) {
       case UP:
+        /* if (!this.isJumping){
+          this.actions.up = apply;
+          this.isJumping = true
+          setTimeout(() => {
+            this.isJumping = false
+          }, 1100)
+        } */
         this.actions.up = apply;
         break;
       case RIGHT:
