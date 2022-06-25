@@ -1,19 +1,10 @@
 class Platform {
-    constructor(ctx) {
+    constructor(ctx, x, y, width, height) {
         this.ctx = ctx;
-        this.x = 100;
-        this.y = 350;
-        this.height = 50;
-        this.width = 300;
-    }
-
-    draw() {
-        this.ctx.fillRect(
-            this.x,
-            this.y,
-            this.width,
-            this.height
-          )
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
     collide(player) {

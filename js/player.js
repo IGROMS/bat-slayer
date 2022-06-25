@@ -4,11 +4,11 @@ class Player {
     this.width = 252;
     this.height = 54;
     this.x = 30;
-    this.y = this.ctx.canvas.height - this.height;
+    this.y = this.ctx.canvas.height - this.height  - FLOOR;
     this.vy = 0;
     this.vx = 0;
     this.g = 1;
-    this.maxY = this.ctx.canvas.height;
+    this.maxY = this.ctx.canvas.height - FLOOR;
     this.actions =  {
       up : false,
       right: false,
@@ -19,52 +19,30 @@ class Player {
 
     this.img = new Image();
     this.img.src = "/img/Hero/player_sprite.png";
-    this.img.frames = 14;
-    this.img.frameIndex = 0;
+    this.img.xFrames = 5;
+    this.img.yFrames = 14;
+    this.img.yFrameIndex = 0;
+    this.img.xFrameIndex = 0;
     this.tick = 0;
     this.setListeners()
   }
 
   draw() {
-    if (this.actions.right){
-      this.ctx.drawImage(
-        this.img,
-        0,
-        this.img.frameIndex * this.img.height / this.img.frames,
-        this.img.width / 5,
-        this.img.height / this.img.frames,
-        this.x,
-        this.y,
-        this.width,
-        this.height)
-      } else if (this.actions.up) {
-      this.ctx.drawImage(
-        this.img,
-        252,
-        this.img.frameIndex * this.img.height / this.img.frames,
-        this.img.width / 5,
-        this.img.height / this.img.frames,
-        this.x,
-        this.y,
-        this.width,
-        this.height)
-    } else {
-      this.ctx.drawImage(
-        this.img,
-        0,
-        this.img.frameIndex * this.img.height / this.img.frames,
-        this.img.width / 5,
-        this.img.height / this.img.frames,
-        this.x,
-        this.y,
-        this.width,
-        this.height)
-    }
+    this.ctx.drawImage(
+      this.img,
+      this.img.width / 5 * this.img.xFrameIndex,
+      this.img.height / 14 * this.img.yFrameIndex,
+      this.img.width / 5,
+      this.img.height / 14,
+      this.x,
+      this.y,
+      this.width,
+      this.height)
     this.animate()
   }
 
   isFloor() {
-    return this.y + this.height >= this.maxY && this.vy >= 0; 
+    return this.y + this.height + FLOOR >= this.maxY && this.vy >= 0; 
   }
 
   move() {
@@ -90,20 +68,19 @@ class Player {
     if (this.actions.up){
       if(this.tick >= 8) {
         this.tick = 0
-        this.img.frameIndex++
+        this.img.yFrameIndex++
         }
-      if(this.img.frameIndex >= 8){
-        this.img.frameIndex = 0;
+      if(this.img.yFrameIndex >= 8){
+        this.img.yFrameIndex = 0;
       }}
     if (this.actions.right){
       if(this.tick >= 4) {
         this.tick = 0
-        this.img.frameIndex++
+        this.img.yFrameIndex++
         }
-      if(this.img.frameIndex >= 4){
-        this.img.frameIndex = 0;
+      if(this.img.yFrameIndex >= 4){
+        this.img.yFrameIndex = 0;
       }}
-
   }
 
   setListeners() {
@@ -112,28 +89,34 @@ class Player {
   }
 
   applyActions() {
-    if( this.isFloor() && this.actions.up) {
+    if(this.isFloor() && this.actions.up && !this.isJumping) {
+      this.img.xFrameIndex = 1
       this.vy = -20
+      this.isJumping = true
+      // this.actions.up = false
     } else if(this.actions.right) {
+      this.img.xFrameIndex = 0
       this.vx = 4
     } else if(this.actions.left) {
+      this.img.xFrameIndex = 0
       this.vx = -4
     } else {
       this.vx = 0;
+    }
+    if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
+      this.actions.up = false;
+      this.isJumping = false;
+      this.img.yFrameIndex = 0;
+      this.img.xFrameIndex = 0;
     }
   }
 
   switchAction(key, apply) {
     switch(key) {
       case UP:
-        /* if (!this.isJumping){
+        if (apply) {
           this.actions.up = apply;
-          this.isJumping = true
-          setTimeout(() => {
-            this.isJumping = false
-          }, 1100)
-        } */
-        this.actions.up = apply;
+        }
         break;
       case RIGHT:
         this.actions.right = apply;
