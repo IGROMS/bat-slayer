@@ -26,13 +26,13 @@ class Platform {
     }
 
     collide(player) {
-        const collideX = player.x + 70 > this.x && player.x + 34 < this.x + this.width;
-        const collideY = player.y < this.y + this.height && player.y + player.height > this.y;
+        const collideX = player.x + 70 >= this.x && player.x + 34 <= this.x + this.width;
+        const collideY = player.y <= this.y + this.height && player.y + player.height >= this.y;
         return collideX && collideY;
       }
 
     collideTop(player) {
-        return player.y + player.height > this.y && player.y + player.height < this.y + this.height
+        return player.y + player.height >= this.y && player.y + player.height < this.y + this.height
     }
 
     collideBottom(player) {

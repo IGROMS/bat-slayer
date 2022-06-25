@@ -27,7 +27,6 @@ class Game {
   start() {
     this.intervalId = setInterval(() => {
       this.clear()
-      //this.addObstacle()
       this.draw()
       this.move()
       this.checkCollisions()
@@ -58,15 +57,15 @@ class Game {
   }
 
   checkCollisions() {
-    this.platforms.forEach(platform => {
-      if(platform.collide(this.player)) {
-        if(platform.collideTop(this.player)) {
-          this.player.maxY = platform.y
-          this.player.y = platform.y - this.player.height
-        }
-      } else {
-        this.player.maxY = this.ctx.canvas.height
-      }})
+    const platform = this.platforms.find(plat => plat.collide(this.player) && plat.collideTop(this.player))
+
+    if(platform) {
+      console.log('collidess', platform.y, this.player.maxY);
+      this.player.maxY = platform.y;
+    } else {
+      console.log('else');
+      this.player.maxY = this.ctx. canvas.height - FLOOR
+    }
   }
 
 }

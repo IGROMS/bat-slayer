@@ -43,7 +43,7 @@ class Player {
   }
 
   isFloor() {
-    return this.y + this.height + FLOOR >= this.maxY - FLOOR && this.vy >= 0; 
+    return this.y + this.height >= this.maxY && this.vy >= 0; 
   }
 
   move() {
@@ -53,7 +53,8 @@ class Player {
     this.y += this.vy;
     this.vy += this.g;
     if(this.isFloor()) {
-      this.y = this.maxY - this.height - FLOOR;
+      console.log('is floor');
+      this.y = this.maxY - this.height;
       this.vy = 0;
     }
     if (this.x <= 0){
@@ -92,7 +93,7 @@ class Player {
   applyActions() {
     if(this.isFloor() && this.actions.up && !this.isJumping) {
       this.img.xFrameIndex = 1
-      this.vy = -20
+      this.vy = -18
       this.isJumping = true
     } else if(this.actions.right) {
       this.img.xFrameIndex = 0
@@ -104,6 +105,7 @@ class Player {
       this.vx = 0;
     }
     if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
+      console.log('land');
       this.actions.up = false;
       this.isJumping = false;
       this.img.yFrameIndex = 0;
@@ -126,5 +128,4 @@ class Player {
         break;
     }
   }
-
 }
