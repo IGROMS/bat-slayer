@@ -5,6 +5,24 @@ class Platform {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.vx = -2
+    }
+
+    draw() {
+        this.ctx.fillRect(
+            this.x,
+            this.y,
+            this.width,
+            this.height
+          )
+    }
+
+    move() {
+        this.x += this.vx
+    
+        if (this.x + this.w <= 0) {
+          this.x = 0
+        }
     }
 
     collide(player) {

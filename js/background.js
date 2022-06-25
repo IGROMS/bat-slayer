@@ -11,47 +11,33 @@ class Background {
 
     this.img = new Image()
     this.img.src = '/img/BG/BG-front.png'
-    this.img.isReady = false
-    this.img.onload = () => {
-      this.img.isReady = true
-    }
-
     this.movements = {
       right: false
     }
   }
 
-  isReady() {
-    return this.img.isReady
-  }
-
   draw() {
-    if (this.isReady()) {
-      this.ctx.drawImage(
-        this.img,
-        this.x,
-        this.y,
-        this.w,
-        this.h
-      )
-    }
+    this.ctx.drawImage(
+      this.img,
+      this.x,
+      this.y,
+      this.w,
+      this.h
+    )
   }
 
   move() {
-    if (this.movements.right) {
       this.x += this.vx
-  
-      if (this.x + this.w <= 0) {
-        this.x = 0
+      if (this.x + this.w  <= 1080) {
+        this.vx = 0
       }
-    }
   }
 
   onKeyEvent(event) {
     const status = event.type === 'keydown'
 
     switch (event.keyCode) {
-      case KEY_RIGHT:
+      case RIGHT:
         this.movements.right = status
         break;
     
