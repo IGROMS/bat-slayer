@@ -20,7 +20,7 @@ class Coin {
 draw() {
   this.ctx.drawImage(
     this.img,
-    0,
+    this.img.width / 60 * this.img.xFrameIndex,
     0,
     this.img.width / 60,
     this.img.height,
@@ -41,10 +41,7 @@ move() {
 
 animate() {
   this.tick++
-  if(this.tick >= 60) {
-    this.tick = 0
-    this.img.xFrameIndex++
-    }
+  this.img.xFrameIndex++
   if(this.img.xFrameIndex >= 60){
     this.img.xFrameIndex = 0;
   }
