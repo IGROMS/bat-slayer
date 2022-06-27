@@ -8,7 +8,7 @@ class Game {
     this.backgroundBack = new BackgroundBack(this.ctx);
     this.background = new Background(this.ctx);
     this.platforms = [
-      new Platform(this.ctx, 500, 286, 129, 96),
+      new Platform(this.ctx, 1002, 286, 129, 96),
       new Platform(this.ctx, 1395, 286, 160, 96),
       new Platform(this.ctx, 1647, 230, 254, 32),
       new Platform(this.ctx, 2096, 286, 62, 96),
