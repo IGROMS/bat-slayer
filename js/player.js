@@ -1,5 +1,5 @@
 class Player {
-  constructor() {
+  constructor(ctx) {
     this.ctx = ctx;
     this.width = 252;
     this.height = 54;
@@ -105,10 +105,10 @@ class Player {
       this.isJumping = true
     } else if(this.actions.right) {
       this.img.xFrameIndex = 0
-      this.vx = 4
+      this.vx = 3
     } else if(this.actions.left) {
       this.img.xFrameIndex = 0
-      this.vx = -4
+      this.vx = -3
     } else {
       this.vx = 0;
     }
@@ -118,6 +118,7 @@ class Player {
       this.img.yFrameIndex = 0;
       this.img.xFrameIndex = 0;
     }
+    
   }
 
   switchAction(key, apply) {

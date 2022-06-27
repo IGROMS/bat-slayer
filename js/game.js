@@ -6,6 +6,7 @@ class Game {
     this.player = new Player(this.ctx);
     this.tick = 0;
     this.backgroundBack = new BackgroundBack(this.ctx);
+    this.backgroundClouds = new BackgroundClouds(this.ctx);
     this.background = new Background(this.ctx);
     this.platforms = [
       new Platform(this.ctx, 1002, 286, 129, 96),
@@ -40,6 +41,7 @@ class Game {
 
   draw() {
     this.backgroundBack.draw()
+    this.backgroundClouds.draw()
     this.background.draw()
     this.player.draw()
     //this.platforms.forEach(el => el.draw())
@@ -48,10 +50,14 @@ class Game {
   move() {
     if (this.player.x === this.player.maxX && this.player.actions.right) {
       this.background.move()
+      this.backgroundClouds.move()
+      this.backgroundBack.move()
       this.platforms.forEach(el => el.move())
     }
     if (this.background.x + this.background.w  <= 1080) {
       this.background.vx= 0
+      this.backgroundClouds.vx= 0
+      this.backgroundBack.vx= 0
       this.platforms.forEach(el => el.vx = 0)
       this.player.maxX = this.ctx.canvas.width
     }

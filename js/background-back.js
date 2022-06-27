@@ -7,7 +7,7 @@ class BackgroundBack {
       this.h = this.ctx.canvas.height
       this.w = 4544
   
-      this.vx = -0.1
+      this.vx = -0.5
   
       this.img = new Image()
       this.img.src = '/img/BG/BG-back.png'

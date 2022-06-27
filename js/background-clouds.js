@@ -1,4 +1,4 @@
-class Background {
+class BackgroundClouds {
   constructor(ctx) {
     this.ctx = ctx
 
@@ -7,10 +7,10 @@ class Background {
     this.h = this.ctx.canvas.height
     this.w = 4544
 
-    this.vx = -3
+    this.vx = -1.5
 
     this.img = new Image()
-    this.img.src = '/img/BG/BG-front.png'
+    this.img.src = '/img/BG/BG-cloud.png'
     this.movements = {
       right: false
     }
