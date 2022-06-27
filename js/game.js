@@ -24,6 +24,22 @@ class Game {
       new Platform(this.ctx, 3894, 234, 517, 32),
       new Platform(this.ctx, 4456, 258, 88, 124),
     ]
+    this.coins = [
+      new Coin(this.ctx, 1002, 286),
+      new Coin(this.ctx, 1395, 286),
+      new Coin(this.ctx, 1647, 230),
+      new Coin(this.ctx, 2096, 286),
+      new Coin(this.ctx, 2245, 254),
+      new Coin(this.ctx, 2451, 158),
+      new Coin(this.ctx, 2658, 288),
+      new Coin(this.ctx, 2763, 226),
+      new Coin(this.ctx, 2939, 194),
+      new Coin(this.ctx, 3366, 286),
+      new Coin(this.ctx, 3454, 313),
+      new Coin(this.ctx, 3756, 286),
+      new Coin(this.ctx, 3894, 234),
+      new Coin(this.ctx, 4456, 258),
+    ]
   }
 
   start() {
@@ -44,6 +60,7 @@ class Game {
     this.backgroundClouds.draw()
     this.background.draw()
     this.player.draw()
+    this.coins.forEach(coin => coin.draw())
     //this.platforms.forEach(el => el.draw())
   }
 
@@ -52,13 +69,16 @@ class Game {
       this.background.move()
       this.backgroundClouds.move()
       this.backgroundBack.move()
+      this.coins.forEach(coin => coin.move())
       this.platforms.forEach(el => el.move())
     }
     if (this.background.x + this.background.w  <= 1080) {
       this.background.vx= 0
       this.backgroundClouds.vx= 0
       this.backgroundBack.vx= 0
+      this.coins.vx = 0
       this.platforms.forEach(el => el.vx = 0)
+      this.coins.forEach(coin => coin.vx = 0)
       this.player.maxX = this.ctx.canvas.width
     }
     this.player.move()

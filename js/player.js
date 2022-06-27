@@ -105,20 +105,20 @@ class Player {
       this.isJumping = true
     } else if(this.actions.right) {
       this.img.xFrameIndex = 0
-      this.vx = 3
+       this.vx = 3  
     } else if(this.actions.left) {
       this.img.xFrameIndex = 0
       this.vx = -3
     } else {
       this.vx = 0;
     }
-    if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
-      this.actions.up = false;
-      this.isJumping = false;
-      this.img.yFrameIndex = 0;
-      this.img.xFrameIndex = 0;
-    }
-    
+     if(!this.actions.right) {
+       if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
+         this.isJumping = false;
+         this.actions.up = false;
+         this.img.xFrameIndex = 0;
+         this.img.yFrameIndex = 0;
+    }}
   }
 
   switchAction(key, apply) {
