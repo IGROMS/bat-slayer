@@ -52,12 +52,4 @@ collide(player) {
     const collideY = player.y <= this.y + this.height && player.y + player.height >= this.y;
     return collideX && collideY;
   }
-
-collideTop(player) {
-    return player.y + player.height >= this.y && player.y + player.height < this.y + this.height
-}
-
-collideBottom(player) {
-    return player.y < this.y + this.height && player.y > this.y
-}
 }

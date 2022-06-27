@@ -17,6 +17,7 @@ class Player {
       shoot : false,
     }
     this.isJumping = false;
+    
 
     this.img = new Image();
     this.img.src = "/img/Hero/player_sprite.png";
@@ -24,7 +25,9 @@ class Player {
     this.img.yFrames = 14;
     this.img.yFrameIndex = 0;
     this.img.xFrameIndex = 0;
+    this.img.maxY = 5
     this.tick = 0;
+    this.isFlooring = false
     this.setListeners()
   }
 
@@ -65,32 +68,48 @@ class Player {
   }
 
   animate() {
-    this.tick++
-    if (this.actions.right && this.actions.up) {
-      if(this.tick >= 8) {
+      this.tick++
+
+    if (this.img.xFrameIndex === 1 && this.isFloor()) {
+      this.img.yFrameIndex = 5
+      this.img.maxY = 7
+      this.isFlooring = true
+      setTimeout(() => {
+        this.isFlooring = false
+        this.img.xFrameIndex = 0
+        this.img.maxY = 5
+      }, 50)
+      this.img.yFrameIndex = 6
+    }
+
+    if (this.isFloor() && !this.isFlooring && !this.actions.right){
+      this.img.xFrameIndex = 0
+      this.img.yFrameIndex = 0
+    } else {
+      if (!this.isFloor()) {
+        this.img.xFrameIndex = 1
+      }
+
+      if (this.tick >= 12 && this.img.yFrameIndex !== 4) {
         this.tick = 0
         this.img.yFrameIndex++
-        }
-      if(this.img.yFrameIndex >= 8){
+      }
+      if (this.img.yFrameIndex >= this.img.maxY) {
         this.img.yFrameIndex = 0;
       }
-    }
-    if (this.actions.right){
-      if(this.tick >= 4) {
-        this.tick = 0
-        this.img.yFrameIndex++
+    } 
+
+    if (this.actions.right && this.isFloor()) {
+        if (this.img.yFrameIndex >= 7){
+          this.img.yFrameIndex = 0;
         }
-      if(this.img.yFrameIndex >= 4){
-        this.img.yFrameIndex = 0;
-      }}
-    if (this.actions.up){
-      if(this.tick >= 8) {
-        this.tick = 0
-        this.img.yFrameIndex++
+        if (this.tick >= 8) {
+          this.tick = 0
+          this.img.yFrameIndex++
         }
-      if(this.img.yFrameIndex >= 8){
-        this.img.yFrameIndex = 0;
-      }}
+      }
+        
+    
   }
 
   setListeners() {
@@ -99,34 +118,28 @@ class Player {
   }
 
   applyActions() {
-    if(this.isFloor() && this.actions.up && !this.isJumping) {
-      this.img.xFrameIndex = 1
+    if(this.actions.up && this.isFloor() && !this.isJumping) {
       this.vy = -18
       this.isJumping = true
     } else if(this.actions.right) {
-      this.img.xFrameIndex = 0
-       this.vx = 3  
+      this.isJumping = false;
+      this.actions.up = false;
+      this.vx = 3  
     } else if(this.actions.left) {
-      this.img.xFrameIndex = 0
+      this.isJumping = false;
+      this.actions.up = false;
       this.vx = -3
     } else {
+      this.isJumping = false
       this.vx = 0;
     }
-     if(!this.actions.right) {
-       if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
-         this.isJumping = false;
-         this.actions.up = false;
-         this.img.xFrameIndex = 0;
-         this.img.yFrameIndex = 0;
-    }}
+
   }
 
   switchAction(key, apply) {
     switch(key) {
       case UP:
-        if (apply) {
-          this.actions.up = apply;
-        }
+        this.actions.up = apply;
         break;
       case RIGHT:
         this.actions.right = apply;
