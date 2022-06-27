@@ -4,8 +4,9 @@ class Game {
     //this.background = new Background(this.ctx);
     this.intervalId = null;
     this.player = new Player(this.ctx);
-    this.tick = 0
-    this.background = new Background(this.ctx)
+    this.tick = 0;
+    this.backgroundBack = new BackgroundBack(this.ctx);
+    this.background = new Background(this.ctx);
     this.platforms = [
       new Platform(this.ctx, 500, 286, 129, 96),
       new Platform(this.ctx, 1395, 286, 160, 96),
@@ -38,9 +39,10 @@ class Game {
   }
 
   draw() {
+    this.backgroundBack.draw()
     this.background.draw()
     this.player.draw()
-    this.platforms.forEach(el => el.draw())
+    //this.platforms.forEach(el => el.draw())
   }
 
   move() {
@@ -54,16 +56,15 @@ class Game {
       this.player.maxX = this.ctx.canvas.width
     }
     this.player.move()
+
   }
 
   checkCollisions() {
     const platform = this.platforms.find(plat => plat.collide(this.player) && plat.collideTop(this.player))
 
     if(platform) {
-      console.log('collidess', platform.y, this.player.maxY);
       this.player.maxY = platform.y;
     } else {
-      console.log('else');
       this.player.maxY = this.ctx. canvas.height - FLOOR
     }
   }

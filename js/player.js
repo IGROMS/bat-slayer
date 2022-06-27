@@ -53,7 +53,6 @@ class Player {
     this.y += this.vy;
     this.vy += this.g;
     if(this.isFloor()) {
-      console.log('is floor');
       this.y = this.maxY - this.height;
       this.vy = 0;
     }
@@ -67,20 +66,29 @@ class Player {
 
   animate() {
     this.tick++
-    if (this.actions.up){
+    if (this.actions.right && this.actions.up) {
       if(this.tick >= 8) {
         this.tick = 0
         this.img.yFrameIndex++
         }
       if(this.img.yFrameIndex >= 8){
         this.img.yFrameIndex = 0;
-      }}
+      }
+    }
     if (this.actions.right){
       if(this.tick >= 4) {
         this.tick = 0
         this.img.yFrameIndex++
         }
       if(this.img.yFrameIndex >= 4){
+        this.img.yFrameIndex = 0;
+      }}
+    if (this.actions.up){
+      if(this.tick >= 8) {
+        this.tick = 0
+        this.img.yFrameIndex++
+        }
+      if(this.img.yFrameIndex >= 8){
         this.img.yFrameIndex = 0;
       }}
   }
@@ -105,7 +113,6 @@ class Player {
       this.vx = 0;
     }
     if(this.isJumping && this.isFloor() && this.img.yFrameIndex === 7) {
-      console.log('land');
       this.actions.up = false;
       this.isJumping = false;
       this.img.yFrameIndex = 0;
