@@ -17,7 +17,8 @@ class Player {
       shoot : false,
     }
     this.isJumping = false;
-    
+    this.health = 20;
+		this.strength = 1
 
     this.img = new Image();
     this.img.src = "/img/Hero/player_sprite.png";

@@ -2,7 +2,6 @@ class Game {
   constructor(ctx) {
     this.ctx =  ctx;
     this.coinCount = 0;
-    //this.background = new Background(this.ctx);
     this.intervalId = null;
     this.player = new Player(this.ctx);
     this.tick = 0;
