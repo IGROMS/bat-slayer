@@ -113,6 +113,14 @@ class Player {
     
   }
 
+  attack(){
+    return this.strength
+  }
+
+  receiveDamage(damage){
+    this.health =- damage;
+  }
+
   setListeners() {
     document.onkeydown = e => this.switchAction(e.keyCode, true)
     document.onkeyup = e => this.switchAction(e.keyCode, false)

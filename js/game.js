@@ -66,6 +66,49 @@ class Game {
       new Coin(this.ctx, 4286, 191),
 
     ]
+
+    this.bats = [
+      new Bat(this.ctx, 1036, 245, this.player),
+      new Bat(this.ctx, 1082, 245, this.player),
+      new Bat(this.ctx, 1183, 341, this.player),
+      new Bat(this.ctx, 1229, 341, this.player),
+      new Bat(this.ctx, 1275, 341, this.player),
+      new Bat(this.ctx, 1321, 341, this.player),
+      new Bat(this.ctx, 1421, 245, this.player),
+      new Bat(this.ctx, 1467, 245, this.player),
+      new Bat(this.ctx, 1513, 245, this.player),
+      new Bat(this.ctx, 1622, 341, this.player),
+      new Bat(this.ctx, 1668, 341, this.player),
+      new Bat(this.ctx, 1714, 341, this.player),
+      new Bat(this.ctx, 1760, 341, this.player),
+      new Bat(this.ctx, 1806, 341, this.player),
+      new Bat(this.ctx, 1852, 341, this.player),
+      new Bat(this.ctx, 1898, 341, this.player),
+      new Bat(this.ctx, 1944, 341, this.player),
+      new Bat(this.ctx, 1990, 341, this.player),
+      new Bat(this.ctx, 1676, 189, this.player),
+      new Bat(this.ctx, 1722, 189, this.player),
+      new Bat(this.ctx, 1768, 189, this.player),
+      new Bat(this.ctx, 1814, 189, this.player),
+      new Bat(this.ctx, 2470, 117, this.player),
+      new Bat(this.ctx, 2516, 117, this.player),
+      new Bat(this.ctx, 2949, 153, this.player),
+      new Bat(this.ctx, 2995, 153, this.player),
+      new Bat(this.ctx, 3041, 153, this.player),
+      new Bat(this.ctx, 3087, 153, this.player),
+      new Bat(this.ctx, 3133, 153, this.player),
+      new Bat(this.ctx, 3179, 153, this.player),
+      new Bat(this.ctx, 3918, 191, this.player),
+      new Bat(this.ctx, 3964, 191, this.player),
+      new Bat(this.ctx, 4010, 191, this.player),
+      new Bat(this.ctx, 4056, 191, this.player),
+      new Bat(this.ctx, 4102, 191, this.player),
+      new Bat(this.ctx, 4148, 191, this.player),
+      new Bat(this.ctx, 4194, 191, this.player),
+      new Bat(this.ctx, 4240, 191, this.player),
+      new Bat(this.ctx, 4286, 191, this.player),
+
+    ]
   }
 
   start() {
@@ -87,6 +130,7 @@ class Game {
     this.background.draw()
     this.player.draw()
     this.coins.forEach(coin => coin.draw())
+    this.bats.forEach(bat => bat.draw())
     //this.platforms.forEach(el => el.draw())
   }
 
@@ -96,6 +140,7 @@ class Game {
       this.backgroundClouds.move()
       this.backgroundBack.move()
       this.coins.forEach(coin => coin.move())
+      this.bats.forEach(bat => bat.move())
       this.platforms.forEach(el => el.move())
     }
     if (this.background.x + this.background.w  <= 1080) {
@@ -105,6 +150,7 @@ class Game {
       this.coins.vx = 0
       this.platforms.forEach(el => el.vx = 0)
       this.coins.forEach(coin => coin.vx = 0)
+      this.bats.forEach(bat => bat.move())
       this.player.maxX = this.ctx.canvas.width
     }
     this.player.move()
@@ -124,8 +170,12 @@ class Game {
       if (coin.collide(this.player)) {
         this.coins.splice(index, 1)
         this.coinCount ++
-        console.log(this.coinCount);
+      }
+    })
 
+    this.bats.forEach((bat, index) => {
+      if (bat.collide(this.player)) {
+        this.bats.splice(index, 1)
       }
     })
 
