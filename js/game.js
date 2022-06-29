@@ -135,7 +135,9 @@ class Game {
 
   checkCollisions() {
     const platform = this.platforms.find(plat => plat.collide(this.player) && plat.collideTop(this.player))
+		const batCollision = this.bats.find(bat => bat.collideAttack(this.player))
 
+		console.log(batCollision)
     if(platform) {
       this.player.maxY = platform.y;
     } else {
@@ -149,11 +151,13 @@ class Game {
       }
     })
 
-    /* this.bats.forEach((bat, index) => {
-      if (bat.collide(this.player)) {
-        this.bats.splice(index, 1)
-      }
-    }) */
+    this.bats.forEach((bat, index) => {
+    	if (this.player.isAttacking && bat.collideAttack(this.player)) {
+				this.bats.splice(index, 1)
+    	} else if(bat.collide(this.player)) {
+				console.log('cositas');
+			}
+    })
 
   }
 }

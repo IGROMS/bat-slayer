@@ -1,5 +1,5 @@
 UP = 87
 RIGHT = 68
 LEFT = 65
-SPACE = 32
+DOT = 190
 FLOOR = 118

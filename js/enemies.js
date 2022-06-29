@@ -44,7 +44,12 @@ class Bat {
       this.x,
       this.y,
       this.width,
-      this.height)
+      this.height
+		)
+
+		this.ctx.beginPath();
+    this.ctx.rect(this.x, this.y, this.width, this.height);
+    this.ctx.stroke();
     this.animate()
   }
 
@@ -77,14 +82,12 @@ class Bat {
       }
 
 			if (this.x - this.player.x <= 200 && this.player.x - (this.x + this.width) <= 50 && this.y < this.player.y && this.sleep) {
-				console.log('despertado')
 				this.img.xFrameIndex = 0
       	this.img.yFrameIndex = 1;
 				this.sleep = false;
       }
 
 			if (this.img.xFrameIndex >= 6 && !this.sleep && !this.hasFallen) {
-				console.log(this.img.xFrameIndex)
 				this.img.yFrameIndex = 2;
 				this.hasFallen = true
 			
@@ -107,7 +110,13 @@ class Bat {
 
   collide(player) {
     const collideX = player.x + 70 >= this.x && player.x + 34 <= this.x + this.width;
-    const collideY = player.y <= this.y + this.height && player.y + player.height >= this.y;
+    const collideY = player.y + 24 <= this.y + 62 && player.y + player.height >= this.y;
+    return collideX && collideY;
+  }
+
+	collideAttack(player) {
+    const collideX = player.x + 138 >= this.x && player.x + 70 <= this.x + this.width;
+    const collideY = player.y + 24 <= this.y + 62 && player.y + player.height >= this.y;
     return collideX && collideY;
   }
 

@@ -14,9 +14,10 @@ class Player {
       up : false,
       right: false,
       left: false,
-      shoot : false,
+      hit : false,
     }
     this.isJumping = false;
+    this.isAttacking = false;
     this.health = 20;
 		this.strength = 1
 
@@ -42,7 +43,12 @@ class Player {
       this.x,
       this.y,
       this.width,
-      this.height)
+      this.height
+    )
+    this.ctx.beginPath();
+    this.ctx.rect(this.x, this.y, this.width, this.height);
+    this.ctx.stroke();
+    this.ctx.closePath()
     this.animate()
   }
 
@@ -70,7 +76,20 @@ class Player {
 
   animate() {
       this.tick++
-
+    if (this.isFloor() && this.isAttacking) {
+        this.isAttacking = true
+        this.img.xFrameIndex = 3
+        if (this.tick % 5 === 0) {
+          this.img.yFrameIndex++
+        }
+        if (this.img.yFrameIndex >= 13){
+          this.img.xFrameIndex = 0
+          this.img.yFrameIndex = 0;
+          this.isAttacking = false
+        }
+      }
+    
+      
     if (this.img.xFrameIndex === 1 && this.isFloor()) {
       this.img.yFrameIndex = 5
       this.img.maxY = 7
@@ -83,10 +102,11 @@ class Player {
       this.img.yFrameIndex = 6
     }
 
-    if (this.isFloor() && !this.isFlooring && !this.actions.right){
+    if (this.isFloor() && !this.isFlooring && !this.actions.right && !this.isAttacking){
       this.img.xFrameIndex = 0
       this.img.yFrameIndex = 0
-    } else {
+    } else if (!this.isAttacking){
+    
       if (!this.isFloor()) {
         this.img.xFrameIndex = 1
       }
@@ -100,7 +120,7 @@ class Player {
       }
     } 
 
-    if (this.actions.right && this.isFloor()) {
+    if (this.actions.right && this.isFloor() && !this.isAttacking) {
         if (this.img.yFrameIndex >= 7){
           this.img.yFrameIndex = 0;
         }
@@ -108,9 +128,9 @@ class Player {
           this.tick = 0
           this.img.yFrameIndex++
         }
-      }
-        
-    
+    }
+
+
   }
 
   attack(){
@@ -127,16 +147,23 @@ class Player {
   }
 
   applyActions() {
-    if(this.actions.up && this.isFloor() && !this.isJumping) {
-      this.vy = -18
-      this.isJumping = true
-    } else if(this.actions.right) {
+   if (this.actions.hit){
+      this.isAttacking = true;
       this.isJumping = false;
       this.actions.up = false;
+    } else if(this.actions.up && this.isFloor() && !this.isJumping) {
+      this.vy = -18
+      this.isJumping = true
+      this.isAttacking = false;
+    } else if(this.actions.right && !this.isAttacking) {
+      this.isJumping = false;
+      this.actions.up = false;
+      this.isAttacking = false;
       this.vx = 3  
     } else if(this.actions.left) {
       this.isJumping = false;
       this.actions.up = false;
+      this.isAttacking = false;
       this.vx = -3
     } else {
       this.isJumping = false
@@ -155,6 +182,9 @@ class Player {
         break;
       case LEFT:
         this.actions.left = apply;
+        break;
+      case DOT:
+        this.actions.hit = apply;
         break;
     }
   }
