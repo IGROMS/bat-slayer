@@ -6,6 +6,7 @@ class Bat {
     this.player = player;
 		this.health = 2;
     this.strength = 1;
+    this.vx = -3
 
     this.img = new Image();
     this.img.src = "/img/Bat/bat_sprite.png";
@@ -26,6 +27,12 @@ class Bat {
   }
 
   draw() {
+    /* this.ctx.fillRect(
+      this.x,
+      this.y,
+      20,
+      20
+    ) */
     this.ctx.drawImage(
       this.img,
       this.img.width / 7 * this.img.xFrameIndex,
@@ -51,31 +58,24 @@ class Bat {
     this.tick++
 
     if (this.x - this.player.x >= 50){
-      this.img.yFrameIndex = 0
-      this.img.xFrameIndex ++
-    } /* else {
-      if (!this.isFloor()) {
-        this.img.xFrameIndex = 1
+      if (this.img.xFrameIndex >= 6){
+        this.img.xFrameIndex = 0;
       }
-
-      if (this.tick >= 12 && this.img.yFrameIndex !== 4) {
+      if (this.tick >= 40) {
         this.tick = 0
-        this.img.yFrameIndex++
+        this.img.xFrameIndex++
       }
-      if (this.img.yFrameIndex >= this.img.maxY) {
-        this.img.yFrameIndex = 0;
-      }
-    } */ 
-
-    /* if (this.actions.right && this.isFloor()) {
-      if (this.img.yFrameIndex >= 7){
-        this.img.yFrameIndex = 0;
-      }
-      if (this.tick >= 8) {
+    }
+    if(this.x - this.player.x <= 200) {
+      this.img.yFrameIndex = 2;
+      if (this.tick >= 10) {
         this.tick = 0
-        this.img.yFrameIndex++
+        this.img.xFrameIndex++
       }
-    } */
+      if (this.img.xFrameIndex >= 6){
+        this.img.xFrameIndex = 0;
+      }
+    }
   }
 
   collide(player) {
