@@ -116,7 +116,7 @@ class Bat {
 
 	collideAttack(player) {
     const collideX = player.x + 138 >= this.x && player.x + 70 <= this.x + this.width;
-    const collideY = player.y + 24 <= this.y + 62 && player.y + player.height >= this.y;
+    const collideY = player.y /* + 24 */ <= this.y + 62 && player.y + player.height >= this.y;
     return collideX && collideY;
   }
 
