@@ -76,7 +76,7 @@ class Bat {
 				}
       }
 
-			if (this.x - this.player.x <= 200 && this.y < this.player.y && this.sleep) {
+			if (this.x - this.player.x <= 200 && this.player.x - (this.x + this.width) <= 50 && this.y < this.player.y && this.sleep) {
 				console.log('despertado')
 				this.img.xFrameIndex = 0
       	this.img.yFrameIndex = 1;
