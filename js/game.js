@@ -150,7 +150,7 @@ class Game {
       this.coins.vx = 0
       this.platforms.forEach(el => el.vx = 0)
       this.coins.forEach(coin => coin.vx = 0)
-      this.bats.forEach(bat => bat.move())
+      this.bats.forEach(bat => bat.vx = 0)
       this.player.maxX = this.ctx.canvas.width
     }
     this.player.move()
@@ -173,11 +173,11 @@ class Game {
       }
     })
 
-    this.bats.forEach((bat, index) => {
+    /* this.bats.forEach((bat, index) => {
       if (bat.collide(this.player)) {
         this.bats.splice(index, 1)
       }
-    })
+    }) */
 
   }
 }

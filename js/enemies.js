@@ -7,6 +7,8 @@ class Bat {
 		this.health = 2;
     this.strength = 1;
     this.vx = -3
+		this.sleep = true
+		this.hasFallen = false
 
     this.img = new Image();
     this.img.src = "/img/Bat/bat_sprite.png";
@@ -55,27 +57,52 @@ class Bat {
 }
 
   animate() {
-    this.tick++
-
-    if (this.x - this.player.x >= 50){
-      if (this.img.xFrameIndex >= 6){
-        this.img.xFrameIndex = 0;
-      }
-      if (this.tick >= 40) {
-        this.tick = 0
-        this.img.xFrameIndex++
-      }
-    }
-    if(this.x - this.player.x <= 200) {
-      this.img.yFrameIndex = 2;
+    	this.tick++
+		
+		
       if (this.tick >= 10) {
         this.tick = 0
         this.img.xFrameIndex++
+				if (this.sleep && this.img.xFrameIndex >=6) {
+					this.img.xFrameIndex = 0
+				}
+
+				if (!this.sleep && !this.hasFallen && this.img.xFrameIndex > 6 ) {
+					this.img.xFrameIndex = 0
+				}
+
+				if (!this.sleep && this.hasFallen && this.img.xFrameIndex > 6 ) {
+					this.img.xFrameIndex = 0
+				}
       }
-      if (this.img.xFrameIndex >= 6){
-        this.img.xFrameIndex = 0;
+
+			if (this.x - this.player.x <= 200 && this.y < this.player.y && this.sleep) {
+				console.log('despertado')
+				this.img.xFrameIndex = 0
+      	this.img.yFrameIndex = 1;
+				this.sleep = false;
       }
-    }
+
+			if (this.img.xFrameIndex >= 6 && !this.sleep && !this.hasFallen) {
+				console.log(this.img.xFrameIndex)
+				this.img.yFrameIndex = 2;
+				this.hasFallen = true
+			
+			}
+		// 	if (this.img.xFrameIndex >= 6){
+    //     this.img.xFrameIndex = 0
+    //   if (this.img.xFrameIndex >= 5 ){
+    //     this.img.yFrameIndex = 2
+		// 		console.log(this.img.yFrameIndex);
+		// 		if (this.tick >= 10) {
+		// 			this.tick = 0
+		// 			this.img.xFrameIndex++
+		// 		}
+		// 		if (this.img.xFrameIndex >= 6){
+		// 			this.img.xFrameIndex = 0
+		// 		}
+    //   } 
+
   }
 
   collide(player) {
