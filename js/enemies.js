@@ -21,6 +21,7 @@ class Bat {
 
     this.width = this.img.width / 7;
     this.height = this.img.height / 4;
+    this.isHitting = false
 	}
 	attack(){
     return this.strength
@@ -58,36 +59,39 @@ class Bat {
     this.x += this.vx
     this.y += this.vy
 
-    if (this.x <= this.player.x && !this.sleep && this.hasFallen) {
+    /* if (this.x <= this.player.x && !this.sleep && !this.hasFallen) {
       console.log('entro');
       this.vx = 0.5
     }
-    if (this.x >= this.player.x && !this.sleep && this.hasFallen) {
+    if (this.x >= this.player.x && !this.sleep && !this.hasFallen) {
       this.vx = -5
     }
-    if (this.y <= this.player.y && !this.sleep && this.hasFallen) {
+    if (this.y <= this.player.y && !this.sleep && !this.hasFallen) {
       this.vy = 0.5
     }
-    if (this.y >= this.player.y && !this.sleep && this.hasFallen) {
+    if (this.y >= this.player.y && !this.sleep && !this.hasFallen) {
       this.vy = -0.5
-    }
+    } */
   }
 
-  /* freeMove() {
-    if (this.x <= this.player.x && !this.sleep && this.hasFallen) {
-      console.log('entro');
+  freeMove() {
+    if (this.x <= this.player.x && this.hasFallen) {
       this.vx = 0.5
+      this.x += this.vx
     }
-    if (this.x >= this.player.x && !this.sleep && this.hasFallen) {
-      this.vx = -5
+    if (this.x >= this.player.x && this.hasFallen) {
+      this.vx = -0.5
+      this.x += this.vx
     }
-    if (this.y <= this.player.y && !this.sleep && this.hasFallen) {
+    if (this.y <= this.player.y && this.hasFallen) {
       this.vy = 0.5
+      this.y += this.vy
     }
-    if (this.y >= this.player.y && !this.sleep && this.hasFallen) {
+    if (this.y >= this.player.y && this.hasFallen) {
       this.vy = -0.5
+      this.y += this.vy
     }
-  } */
+  }
 
   animate() {
     	this.tick++
@@ -138,7 +142,7 @@ class Bat {
 
   collide(player) {
     const collideX = player.x + 70 >= this.x && player.x + 34 <= this.x + this.width;
-    const collideY = player.y + 24 <= this.y + 62 && player.y + player.height >= this.y;
+    const collideY = player.y + 24 <= this.y + 62 && player.y + player.height >= this.y + 43;
     return collideX && collideY;
   }
 

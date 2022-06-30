@@ -128,7 +128,7 @@ class Game {
       this.backgroundClouds.move()
       this.backgroundBack.move()
       this.coins.forEach(coin => coin.move())
-      this.bats.forEach(bat => bat.move())
+      //this.bats.forEach(bat => bat.move())
       /* this.bats.forEach(bat => {
         if(bat.sleep){
           bat.move()
@@ -143,9 +143,19 @@ class Game {
       this.coins.vx = 0
       this.platforms.forEach(el => el.vx = 0)
       this.coins.forEach(coin => coin.vx = 0)
-      this.bats.forEach(bat => bat.vx = 0)
+      //this.bats.forEach(bat => bat.vx = 0)
       this.player.maxX = this.ctx.canvas.width
     }
+
+    this.bats.forEach(bat => {
+      if (this.player.x === this.player.maxX && this.player.actions.right && !this.player.isAttacking && !bat.hasFallen) {
+        bat.move()
+      } else if (this.background.x + this.background.w  <= 1080 && !bat.hasFallen) {
+        bat.vx = 0
+      } else {
+        bat.freeMove()
+      }
+    })
 
     /* this.bats.forEach(bat => {
       if(!bat.sleep){
@@ -196,8 +206,13 @@ class Game {
             //}, 500)
           }
 					
-    	} else if(bat.collide(this.player)) {
+    	} else if(bat.collide(this.player) && !bat.isHitting) {
 				this.player.receiveDamage(bat.strength)
+        bat.isHitting = true
+        setTimeout(() => {
+          bat.isHitting = false
+        }, 500)
+        console.log(this.player.health);
         if(this.player.health <= 0) {
           this.gameOver()
         }
