@@ -93,6 +93,7 @@ class Game {
       this.draw()
       this.move()
       this.checkCollisions()
+      console.log(this.player.health);
     }, 1000 / 60)
   }
 

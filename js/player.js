@@ -138,7 +138,7 @@ class Player {
   }
 
   receiveDamage(damage){
-    this.health =- damage;
+    this.health -= damage;
   }
 
   setListeners() {
