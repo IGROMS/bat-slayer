@@ -96,6 +96,18 @@ class Game {
     }, 1000 / 60)
   }
 
+  gameOver() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+
+    this.ctx.font = "30px Arial";
+    this.ctx.fillStyle = "red";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("GAME OVER",
+      this.ctx.canvas.width/2,
+      this.ctx.canvas.height/2);
+  }
+
   clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
   }
@@ -117,6 +129,11 @@ class Game {
       this.backgroundBack.move()
       this.coins.forEach(coin => coin.move())
       this.bats.forEach(bat => bat.move())
+      /* this.bats.forEach(bat => {
+        if(bat.sleep){
+          bat.move()
+        }
+      }) */
       this.platforms.forEach(el => el.move())
     }
     if (this.background.x + this.background.w  <= 1080) {
@@ -129,6 +146,16 @@ class Game {
       this.bats.forEach(bat => bat.vx = 0)
       this.player.maxX = this.ctx.canvas.width
     }
+
+    /* this.bats.forEach(bat => {
+      if(!bat.sleep){
+        console.log('entro');
+        bat.freeMove()
+      }
+    }) */
+      
+    
+
     this.player.move()
 
   }
@@ -170,7 +197,10 @@ class Game {
           }
 					
     	} else if(bat.collide(this.player)) {
-				console.log('cositas');
+				this.player.receiveDamage(bat.strength)
+        if(this.player.health <= 0) {
+          this.gameOver()
+        }
 			}
     })
 

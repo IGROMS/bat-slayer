@@ -6,9 +6,10 @@ class Bat {
     this.player = player;
 		this.health = 1;
     this.strength = 1;
-    this.vx = -3
-		this.sleep = true
-		this.hasFallen = false
+    this.vx = -3;
+    this.vy = 0;
+		this.sleep = true;
+		this.hasFallen = false;
 
     this.img = new Image();
     this.img.src = "/img/Bat/bat_sprite.png";
@@ -55,11 +56,38 @@ class Bat {
 
   move() {
     this.x += this.vx
+    this.y += this.vy
 
-    if (this.x + this.w <= 0) {
-      this.x = 0
+    if (this.x <= this.player.x && !this.sleep && this.hasFallen) {
+      console.log('entro');
+      this.vx = 0.5
     }
-}
+    if (this.x >= this.player.x && !this.sleep && this.hasFallen) {
+      this.vx = -5
+    }
+    if (this.y <= this.player.y && !this.sleep && this.hasFallen) {
+      this.vy = 0.5
+    }
+    if (this.y >= this.player.y && !this.sleep && this.hasFallen) {
+      this.vy = -0.5
+    }
+  }
+
+  /* freeMove() {
+    if (this.x <= this.player.x && !this.sleep && this.hasFallen) {
+      console.log('entro');
+      this.vx = 0.5
+    }
+    if (this.x >= this.player.x && !this.sleep && this.hasFallen) {
+      this.vx = -5
+    }
+    if (this.y <= this.player.y && !this.sleep && this.hasFallen) {
+      this.vy = 0.5
+    }
+    if (this.y >= this.player.y && !this.sleep && this.hasFallen) {
+      this.vy = -0.5
+    }
+  } */
 
   animate() {
     	this.tick++
