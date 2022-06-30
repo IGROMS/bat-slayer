@@ -4,7 +4,7 @@ class Bat {
     this.x = x;
     this.y = y;
     this.player = player;
-		this.health = 2;
+		this.health = 1;
     this.strength = 1;
     this.vx = -3
 		this.sleep = true
@@ -47,9 +47,9 @@ class Bat {
       this.height
 		)
 
-		this.ctx.beginPath();
+		/* this.ctx.beginPath();
     this.ctx.rect(this.x, this.y, this.width, this.height);
-    this.ctx.stroke();
+    this.ctx.stroke(); */
     this.animate()
   }
 

@@ -111,7 +111,7 @@ class Game {
   }
 
   move() {
-    if (this.player.x === this.player.maxX && this.player.actions.right) {
+    if (this.player.x === this.player.maxX && this.player.actions.right && !this.player.isAttacking) {
       this.background.move()
       this.backgroundClouds.move()
       this.backgroundBack.move()
@@ -135,7 +135,7 @@ class Game {
 
   checkCollisions() {
     const platform = this.platforms.find(plat => plat.collide(this.player) && plat.collideTop(this.player))
-		const batCollision = this.bats.find(bat => bat.collideAttack(this.player))
+		const batCollision = this.bats.find((bat, index) => bat.collideAttack(this.player))
 
     if(platform) {
       this.player.maxY = platform.y;
@@ -150,12 +150,25 @@ class Game {
       }
     })
 
+    /* if(batCollision) {
+      this.batCollision.receiveDamage(this.player.strength);
+      if (this.batCollision.health <= 0) {
+        this.bats.splice(index, 1)
+      }
+    } else {
+      this.player.maxY = this.ctx. canvas.height - FLOOR
+    } */
+
     this.bats.forEach((bat, index) => {
     	if (this.player.isAttacking && bat.collideAttack(this.player)) {
-				setTimeout(() => {
-					this.bats.splice(index, 1)
-				}, 500)
-				
+					//this.bats.splice(index, 1)
+          bat.receiveDamage(this.player.strength)
+          if (bat.health <= 0) {
+            //setTimeout(() => {    ******** Me está quitando todos los murcielagos en lugar de solo el que pego cuando pongo el setTimeout ********
+              this.bats.splice(index, 1)
+            //}, 500)
+          }
+					
     	} else if(bat.collide(this.player)) {
 				console.log('cositas');
 			}

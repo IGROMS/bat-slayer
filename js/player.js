@@ -45,10 +45,10 @@ class Player {
       this.width,
       this.height
     )
-    this.ctx.beginPath();
+    /* this.ctx.beginPath();
     this.ctx.rect(this.x, this.y, this.width, this.height);
     this.ctx.stroke();
-    this.ctx.closePath()
+    this.ctx.closePath() */
     this.animate()
   }
 
