@@ -8,7 +8,8 @@ class Game {
     this.backgroundBack = new BackgroundBack(this.ctx);
     this.backgroundClouds = new BackgroundClouds(this.ctx);
     this.background = new Background(this.ctx);
-		this.healthbar = new Healthbar(this.ctx, this.player)
+		this.healthbar = new Healthbar(this.ctx, this.player);
+		this.coinsGUI = new CoinsGUI(this.ctx, this)
 		this.backgroundMoves = false;
     this.platforms = [
       new Platform(this.ctx, 1002, 286, 129, 96),
@@ -123,6 +124,7 @@ class Game {
     this.coins.forEach(coin => coin.draw())
     this.bats.forEach(bat => bat.draw())
 		this.healthbar.draw()
+		this.coinsGUI.draw()
     //this.platforms.forEach(el => el.draw())
   }
 
@@ -223,7 +225,7 @@ class Game {
           bat.isHitting = false
         }, 500)
         console.log(this.player.health);
-        if(this.player.health <= 0) {
+        if(this.player.health < 0) {
           this.gameOver()
         }
 			}
