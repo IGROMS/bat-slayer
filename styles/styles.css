@@ -5,9 +5,20 @@
 
 #container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 canvas {
   align-self: center;
+}
+
+#start-button {
+  background-color: #EAB976;
+  font-family: "Minecraft";
+  border-style: none;
+  height: 50px;
+  width: 100px;
+  border-radius: 5px;
 }
