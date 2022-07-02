@@ -8,6 +8,7 @@ class Game {
     this.backgroundBack = new BackgroundBack(this.ctx);
     this.backgroundClouds = new BackgroundClouds(this.ctx);
     this.background = new Background(this.ctx);
+		this.healthbar = new Healthbar(this.ctx, this.player)
 		this.backgroundMoves = false;
     this.platforms = [
       new Platform(this.ctx, 1002, 286, 129, 96),
@@ -121,6 +122,7 @@ class Game {
     this.player.draw()
     this.coins.forEach(coin => coin.draw())
     this.bats.forEach(bat => bat.draw())
+		this.healthbar.draw()
     //this.platforms.forEach(el => el.draw())
   }
 

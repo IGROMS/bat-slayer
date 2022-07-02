@@ -84,7 +84,11 @@ class Bat {
       this.vx = 0.5
       this.x += this.vx
     }
-    if (this.x >= this.player.x && this.hasFallen) {
+    if (this.x >= this.player.x && this.hasFallen && this.game.backgroundMoves) {
+      this.vx = -3.5
+      this.x += this.vx
+    }
+		if (this.x >= this.player.x && this.hasFallen && !this.game.backgroundMoves) {
       this.vx = -0.5
       this.x += this.vx
     }
