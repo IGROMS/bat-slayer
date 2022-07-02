@@ -1,9 +1,10 @@
 class Bat {
-	constructor(ctx, x, y, player) {
+	constructor(ctx, x, y, player, game) {
 		this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.player = player;
+		this.game = game;
 		this.health = 1;
     this.strength = 1;
     this.vx = -3;
@@ -75,7 +76,11 @@ class Bat {
   }
 
   freeMove() {
-    if (this.x <= this.player.x && this.hasFallen) {
+    if (this.x <= this.player.x && this.hasFallen && this.game.backgroundMoves) {
+      this.vx = -2.5
+      this.x += this.vx
+    }
+		if (this.x <= this.player.x && this.hasFallen && !this.game.backgroundMoves) {
       this.vx = 0.5
       this.x += this.vx
     }
@@ -91,6 +96,10 @@ class Bat {
       this.vy = -0.5
       this.y += this.vy
     }
+		if (this.x + this.width <= 0) {
+			this.vx = 0
+			this.vy = 0
+		}
   }
 
   animate() {

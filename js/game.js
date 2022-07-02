@@ -8,6 +8,7 @@ class Game {
     this.backgroundBack = new BackgroundBack(this.ctx);
     this.backgroundClouds = new BackgroundClouds(this.ctx);
     this.background = new Background(this.ctx);
+		this.backgroundMoves = false;
     this.platforms = [
       new Platform(this.ctx, 1002, 286, 129, 96),
       new Platform(this.ctx, 1395, 286, 160, 96),
@@ -68,21 +69,21 @@ class Game {
     ]
 
     this.bats = [
-      new Bat(this.ctx, 1726, 262, this.player),
-      new Bat(this.ctx, 1770, 262, this.player),
-      new Bat(this.ctx, 1814, 262, this.player),
-      new Bat(this.ctx, 2298, 286, this.player),
-      new Bat(this.ctx, 2386, 286, this.player),
-      new Bat(this.ctx, 2782, 258, this.player),
-      new Bat(this.ctx, 3021, 226, this.player),
-      new Bat(this.ctx, 3065, 226, this.player),
-      new Bat(this.ctx, 3109, 226, this.player),
-      new Bat(this.ctx, 4056, 266, this.player),
-      new Bat(this.ctx, 4100, 266, this.player),
-      new Bat(this.ctx, 4144, 266, this.player),
-      new Bat(this.ctx, 4188, 266, this.player),
-      new Bat(this.ctx, 4232, 266, this.player),
-      new Bat(this.ctx, 4276, 266, this.player),
+      new Bat(this.ctx, 1726, 262, this.player, this),
+			new Bat(this.ctx, 1770, 262, this.player, this),
+      new Bat(this.ctx, 1814, 262, this.player, this),
+      new Bat(this.ctx, 2298, 286, this.player, this),
+      new Bat(this.ctx, 2386, 286, this.player, this),
+      new Bat(this.ctx, 2782, 258, this.player, this),
+      new Bat(this.ctx, 3021, 226, this.player, this),
+      new Bat(this.ctx, 3065, 226, this.player, this),
+      new Bat(this.ctx, 3109, 226, this.player, this),
+      new Bat(this.ctx, 4056, 266, this.player, this),
+      new Bat(this.ctx, 4100, 266, this.player, this),
+      new Bat(this.ctx, 4144, 266, this.player, this),
+      new Bat(this.ctx, 4188, 266, this.player, this),
+      new Bat(this.ctx, 4232, 266, this.player, this),
+      new Bat(this.ctx, 4276, 266, this.player, this),
       
     ]
   }
@@ -136,7 +137,10 @@ class Game {
         }
       }) */
       this.platforms.forEach(el => el.move())
-    }
+			this.backgroundMoves = true;
+    } else {
+			this.backgroundMoves = false;
+		}
     if (this.background.x + this.background.w  <= 1080) {
       this.background.vx= 0
       this.backgroundClouds.vx= 0
@@ -148,7 +152,7 @@ class Game {
       this.player.maxX = this.ctx.canvas.width
     }
 
-    this.bats.forEach(bat => {
+    this.bats.forEach((bat, index) => {
       if (this.player.x === this.player.maxX && this.player.actions.right && !this.player.isAttacking && !bat.hasFallen) {
         bat.move()
       } else if (this.background.x + this.background.w  <= 1080 && !bat.hasFallen) {
@@ -156,6 +160,9 @@ class Game {
       } else {
         bat.freeMove()
       }
+			if (bat.x + bat.width <= 0) {
+				this.bats.splice(index, 1)
+			}
     })
 
     /* this.bats.forEach(bat => {
