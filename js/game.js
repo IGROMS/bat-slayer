@@ -5,89 +5,16 @@ class Game {
     this.intervalId = null;
     this.player = new Player(this.ctx);
     this.tick = 0;
-    this.backgroundBack = new BackgroundBack(this.ctx);
-    this.backgroundClouds = new BackgroundClouds(this.ctx);
-    this.background = new Background(this.ctx);
+		this.levelIndex = 0;
+    this.backgroundBack = new BackgroundBack(this.ctx, LEVELS[this.levelIndex].backgroundBack);
+    this.backgroundClouds = new BackgroundClouds(this.ctx, LEVELS[this.levelIndex].backgroundClouds);
+    this.background = new Background(this.ctx, LEVELS[this.levelIndex].background);
 		this.healthbar = new Healthbar(this.ctx, this.player);
 		this.coinsGUI = new CoinsGUI(this.ctx, this)
 		this.backgroundMoves = false;
-    this.platforms = [
-      new Platform(this.ctx, 1002, 286, 129, 96),
-      new Platform(this.ctx, 1395, 286, 160, 96),
-      new Platform(this.ctx, 1647, 230, 254, 32),
-      new Platform(this.ctx, 2096, 286, 62, 96),
-      new Platform(this.ctx, 2245, 254, 254, 32),
-      new Platform(this.ctx, 2451, 158, 96, 96),
-      new Platform(this.ctx, 2658, 288, 32, 94),
-      new Platform(this.ctx, 2763, 226, 96, 32),
-      new Platform(this.ctx, 2939, 194, 266, 32),
-      new Platform(this.ctx, 3366, 286, 96, 96),
-      new Platform(this.ctx, 3454, 313, 72, 69),
-      new Platform(this.ctx, 3756, 286, 32, 96),
-      new Platform(this.ctx, 3894, 234, 450, 32),
-      new Platform(this.ctx, 4456, 258, 88, 124),
-    ];
-    this.coins = [
-      new Coin(this.ctx, 1036, 245),
-      new Coin(this.ctx, 1082, 245),
-      new Coin(this.ctx, 1183, 341),
-      new Coin(this.ctx, 1229, 341),
-      new Coin(this.ctx, 1275, 341),
-      new Coin(this.ctx, 1321, 341),
-      new Coin(this.ctx, 1421, 245),
-      new Coin(this.ctx, 1467, 245),
-      new Coin(this.ctx, 1513, 245),
-      new Coin(this.ctx, 1622, 341),
-      new Coin(this.ctx, 1668, 341),
-      new Coin(this.ctx, 1714, 341),
-      new Coin(this.ctx, 1760, 341),
-      new Coin(this.ctx, 1806, 341),
-      new Coin(this.ctx, 1852, 341),
-      new Coin(this.ctx, 1898, 341),
-      new Coin(this.ctx, 1944, 341),
-      new Coin(this.ctx, 1990, 341),
-      new Coin(this.ctx, 1676, 189),
-      new Coin(this.ctx, 1722, 189),
-      new Coin(this.ctx, 1768, 189),
-      new Coin(this.ctx, 1814, 189),
-      new Coin(this.ctx, 2470, 117),
-      new Coin(this.ctx, 2516, 117),
-      new Coin(this.ctx, 2949, 153),
-      new Coin(this.ctx, 2995, 153),
-      new Coin(this.ctx, 3041, 153),
-      new Coin(this.ctx, 3087, 153),
-      new Coin(this.ctx, 3133, 153),
-      new Coin(this.ctx, 3179, 153),
-      new Coin(this.ctx, 3918, 191),
-      new Coin(this.ctx, 3964, 191),
-      new Coin(this.ctx, 4010, 191),
-      new Coin(this.ctx, 4056, 191),
-      new Coin(this.ctx, 4102, 191),
-      new Coin(this.ctx, 4148, 191),
-      new Coin(this.ctx, 4194, 191),
-      new Coin(this.ctx, 4240, 191),
-      new Coin(this.ctx, 4286, 191),
-
-    ]
-
-    this.bats = [
-      new Bat(this.ctx, 1726, 262, this.player, this),
-			new Bat(this.ctx, 1770, 262, this.player, this),
-      new Bat(this.ctx, 1814, 262, this.player, this),
-      new Bat(this.ctx, 2298, 286, this.player, this),
-      new Bat(this.ctx, 2386, 286, this.player, this),
-      new Bat(this.ctx, 2782, 258, this.player, this),
-      new Bat(this.ctx, 3021, 226, this.player, this),
-      new Bat(this.ctx, 3065, 226, this.player, this),
-      new Bat(this.ctx, 3109, 226, this.player, this),
-      new Bat(this.ctx, 4056, 266, this.player, this),
-      new Bat(this.ctx, 4100, 266, this.player, this),
-      new Bat(this.ctx, 4144, 266, this.player, this),
-      new Bat(this.ctx, 4188, 266, this.player, this),
-      new Bat(this.ctx, 4232, 266, this.player, this),
-      new Bat(this.ctx, 4276, 266, this.player, this),
-      
-    ]
+    this.platforms = LEVELS[this.levelIndex].platforms.map(plat => new Platform(this.ctx, ...plat));
+    this.coins = LEVELS[this.levelIndex].coins.map(coin => new Coin(this.ctx, ...coin));
+    this.bats = LEVELS[this.levelIndex].bats.map(bat => new Bat(this.ctx, ...bat, this.player, this));
   }
 
   start() {
@@ -96,7 +23,6 @@ class Game {
       this.draw()
       this.move()
       this.checkCollisions()
-      console.log(this.player.health);
     }, 1000 / 60)
   }
 
@@ -104,12 +30,32 @@ class Game {
     clearInterval(this.intervalId);
     this.intervalId = null;
 
-    this.ctx.font = "30px Arial";
-    this.ctx.fillStyle = "red";
+		this.ctx.beginPath()
+		this.ctx.fillStyle = "#F6C37D";
+		this.ctx.fillRect (
+      0,
+      0,
+      this.ctx.canvas.width,
+      this.ctx.canvas.heigth
+    )
+		this.ctx.closePath()
+
+		this.ctx.beginPath()
+    this.ctx.font = "100px Minecraft";
+    this.ctx.fillStyle = "#A5CDA5";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("GAME OVER",
+		(this.ctx.canvas.width/2) + 3,
+		(this.ctx.canvas.height/2) + 3);
+		this.ctx.closePath()
+		this.ctx.beginPath()
+    this.ctx.font = "100px Minecraft";
+    this.ctx.fillStyle = "#4D514C";
     this.ctx.textAlign = "center";
     this.ctx.fillText("GAME OVER",
       this.ctx.canvas.width/2,
       this.ctx.canvas.height/2);
+		this.ctx.closePath()
   }
 
   clear() {
@@ -126,6 +72,11 @@ class Game {
 		this.healthbar.draw()
 		this.coinsGUI.draw()
     //this.platforms.forEach(el => el.draw())
+		if(this.player.x >= this.ctx.canvas.width  && this.coinCount >= 30) {
+			this.levelIndex++
+			this.player.health = 20
+			this.levelUp()
+		}
   }
 
   move() {
@@ -168,15 +119,6 @@ class Game {
 				this.bats.splice(index, 1)
 			}
     })
-
-    /* this.bats.forEach(bat => {
-      if(!bat.sleep){
-        console.log('entro');
-        bat.freeMove()
-      }
-    }) */
-      
-    
 
     this.player.move()
 
@@ -224,7 +166,6 @@ class Game {
         setTimeout(() => {
           bat.isHitting = false
         }, 500)
-        console.log(this.player.health);
         if(this.player.health < 0) {
           this.gameOver()
         }
@@ -232,4 +173,21 @@ class Game {
     })
 
   }
+
+	levelUp() {
+		this.coinCount = 0;
+		this.player.x = 30;
+		this.player.maxX = this.ctx.canvas.width / 2;
+		this.backgroundBack = new BackgroundBack(this.ctx, LEVELS[this.levelIndex].backgroundBack);
+    this.backgroundClouds = new BackgroundClouds(this.ctx, LEVELS[this.levelIndex].backgroundClouds);
+    this.background = new Background(this.ctx, LEVELS[this.levelIndex].background);
+		this.platforms = LEVELS[this.levelIndex].platforms.map(plat => new Platform(this.ctx, ...plat));
+    this.coins = LEVELS[this.levelIndex].coins.map(coin => new Coin(this.ctx, ...coin));
+    this.bats = LEVELS[this.levelIndex].bats.map(bat => new Bat(this.ctx, ...bat, this.player, this));
+		this.backgroundBack.x = 0
+    this.backgroundClouds.x = 0
+    this.background.x = 0
+		console.log('backgroundBack', this.backgroundBack.src);
+		console.log('background', this.background.src);
+	}
 }

@@ -1,5 +1,5 @@
 class Background {
-  constructor(ctx) {
+  constructor(ctx, src) {
     this.ctx = ctx
 
     this.x = 0
@@ -10,7 +10,7 @@ class Background {
     this.vx = -3
 
     this.img = new Image()
-    this.img.src = '/img/BG/BG-front.png'
+    this.img.src = src
     this.movements = {
       right: false
     }
@@ -48,7 +48,7 @@ class Background {
 }
 
 class BackgroundBack {
-    constructor(ctx) {
+    constructor(ctx, src) {
       this.ctx = ctx
   
       this.x = 0
@@ -59,7 +59,7 @@ class BackgroundBack {
       this.vx = -0.5
   
       this.img = new Image()
-      this.img.src = '/img/BG/BG-back.png'
+      this.img.src = src
       this.movements = {
         right: false
       }
@@ -97,7 +97,7 @@ class BackgroundBack {
   }
 
   class BackgroundClouds {
-    constructor(ctx) {
+    constructor(ctx, src) {
       this.ctx = ctx
   
       this.x = 0
@@ -108,7 +108,7 @@ class BackgroundBack {
       this.vx = -1.5
   
       this.img = new Image()
-      this.img.src = '/img/BG/BG-cloud.png'
+      this.img.src = src
       this.movements = {
         right: false
       }

@@ -14,14 +14,18 @@ class Bat {
 
     this.img = new Image();
     this.img.src = "/img/Bat/bat_sprite.png";
+		this.img.isReady = false;
+		this.img.onload = () => {
+			this.img.isReady = true;
+			this.width = this.img.width / 7;
+			this.height = this.img.height / 4;
+		}
     this.img.xFrames = 7;
     this.img.yFrames = 4;
     this.img.yFrameIndex = 0;
     this.img.xFrameIndex = 0;
     this.tick = 0;
 
-    this.width = this.img.width / 7;
-    this.height = this.img.height / 4;
     this.isHitting = false
 	}
 	attack(){
@@ -31,6 +35,10 @@ class Bat {
     this.health =- damage;
   }
 
+	isReady() {
+		return this.img.isReady;
+	}
+
   draw() {
     /* this.ctx.fillRect(
       this.x,
@@ -38,41 +46,26 @@ class Bat {
       20,
       20
     ) */
-    this.ctx.drawImage(
-      this.img,
-      this.img.width / 7 * this.img.xFrameIndex,
-      this.img.height / 4 * this.img.yFrameIndex,
-      this.img.width / 7,
-      this.img.height / 4,
-      this.x,
-      this.y,
-      this.width,
-      this.height
-		)
-
-		/* this.ctx.beginPath();
-    this.ctx.rect(this.x, this.y, this.width, this.height);
-    this.ctx.stroke(); */
-    this.animate()
+		if(this.isReady()) {
+			this.ctx.drawImage(
+				this.img,
+				this.img.width / 7 * this.img.xFrameIndex,
+				this.img.height / 4 * this.img.yFrameIndex,
+				this.img.width / 7,
+				this.img.height / 4,
+				this.x,
+				this.y,
+				this.width,
+				this.height
+			)
+	
+			this.animate()
+		}
   }
 
   move() {
     this.x += this.vx
     this.y += this.vy
-
-    /* if (this.x <= this.player.x && !this.sleep && !this.hasFallen) {
-      console.log('entro');
-      this.vx = 0.5
-    }
-    if (this.x >= this.player.x && !this.sleep && !this.hasFallen) {
-      this.vx = -5
-    }
-    if (this.y <= this.player.y && !this.sleep && !this.hasFallen) {
-      this.vy = 0.5
-    }
-    if (this.y >= this.player.y && !this.sleep && !this.hasFallen) {
-      this.vy = -0.5
-    } */
   }
 
   freeMove() {
@@ -137,19 +130,6 @@ class Bat {
 				this.hasFallen = true
 			
 			}
-		// 	if (this.img.xFrameIndex >= 6){
-    //     this.img.xFrameIndex = 0
-    //   if (this.img.xFrameIndex >= 5 ){
-    //     this.img.yFrameIndex = 2
-		// 		console.log(this.img.yFrameIndex);
-		// 		if (this.tick >= 10) {
-		// 			this.tick = 0
-		// 			this.img.xFrameIndex++
-		// 		}
-		// 		if (this.img.xFrameIndex >= 6){
-		// 			this.img.xFrameIndex = 0
-		// 		}
-    //   } 
 
   }
 
