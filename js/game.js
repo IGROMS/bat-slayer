@@ -30,19 +30,27 @@ class Game {
     clearInterval(this.intervalId);
     this.intervalId = null;
 
-		this.ctx.beginPath()
-		this.ctx.fillStyle = "#F6C37D";
+		//this.ctx.beginPath()
+		if(this.levelIndex % 2 === 0){
+			this.ctx.fillStyle = "#F6C37D";
+		} else {
+			this.ctx.fillStyle = "#969696";
+		}
 		this.ctx.fillRect (
       0,
       0,
       this.ctx.canvas.width,
-      this.ctx.canvas.heigth
-    )
-		this.ctx.closePath()
+			this.ctx.canvas.height
+		)
+		//this.ctx.closePath()
 
 		this.ctx.beginPath()
     this.ctx.font = "100px Minecraft";
-    this.ctx.fillStyle = "#A5CDA5";
+    if(this.levelIndex % 2 === 0){
+			this.ctx.fillStyle = "#A5CDA5";
+		} else {
+			this.ctx.fillStyle = "#A5CDA5";
+		}
     this.ctx.textAlign = "center";
     this.ctx.fillText("GAME OVER",
 		(this.ctx.canvas.width/2) + 3,
@@ -116,6 +124,7 @@ class Game {
         bat.freeMove()
       }
 			if (bat.x + bat.width <= 0) {
+				console.log('se fue');
 				this.bats.splice(index, 1)
 			}
     })
@@ -126,7 +135,6 @@ class Game {
 
   checkCollisions() {
     const platform = this.platforms.find(plat => plat.collide(this.player) && plat.collideTop(this.player))
-		const batCollision = this.bats.find((bat, index) => bat.collideAttack(this.player))
 
     if(platform) {
       this.player.maxY = platform.y;
@@ -152,15 +160,8 @@ class Game {
 
     this.bats.forEach((bat, index) => {
     	if (this.player.isAttacking && bat.collideAttack(this.player)) {
-					//this.bats.splice(index, 1)
           bat.receiveDamage(this.player.strength)
-          if (bat.health <= 0) {
-            //setTimeout(() => {    ******** Me está quitando todos los murcielagos en lugar de solo el que pego cuando pongo el setTimeout ********
-              this.bats.splice(index, 1)
-            //}, 500)
-          }
-					
-    	} else if(bat.collide(this.player) && !bat.isHitting) {
+				} else if(bat.collide(this.player) && !bat.isHitting) {
 				this.player.receiveDamage(bat.strength)
         bat.isHitting = true
         setTimeout(() => {
@@ -171,7 +172,7 @@ class Game {
         }
 			}
     })
-
+		this.bats = this.bats.filter(bat  => bat.health > 0)
   }
 
 	levelUp() {
@@ -187,7 +188,5 @@ class Game {
 		this.backgroundBack.x = 0
     this.backgroundClouds.x = 0
     this.background.x = 0
-		console.log('backgroundBack', this.backgroundBack.src);
-		console.log('background', this.background.src);
 	}
 }

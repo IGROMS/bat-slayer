@@ -32,7 +32,9 @@ class Bat {
     return this.strength
   }
   receiveDamage(damage){
-    this.health =- damage;
+		setTimeout(() => {    //******** Me está quitando todos los murcielagos en lugar de solo el que pego cuando pongo el setTimeout ********
+			this.health -= damage;
+		}, 800)
   }
 
 	isReady() {
