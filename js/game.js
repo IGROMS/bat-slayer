@@ -69,6 +69,49 @@ class Game {
     }, 2000)
   }
 
+  congrats() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+
+		//this.ctx.beginPath()
+		if(this.levelIndex % 2 === 0){
+			this.ctx.fillStyle = "#F6C37D";
+		} else {
+			this.ctx.fillStyle = "#969696";
+		}
+		this.ctx.fillRect (
+      0,
+      0,
+      this.ctx.canvas.width,
+			this.ctx.canvas.height
+		)
+		//this.ctx.closePath()
+
+		this.ctx.beginPath()
+    this.ctx.font = "100px Minecraft";
+    if(this.levelIndex % 2 === 0){
+			this.ctx.fillStyle = "#A5CDA5";
+		} else {
+			this.ctx.fillStyle = "#A5CDA5";
+		}
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("CONGRATS",
+		(this.ctx.canvas.width/2) + 3,
+		(this.ctx.canvas.height/2) + 3);
+		this.ctx.closePath()
+		this.ctx.beginPath()
+    this.ctx.font = "100px Minecraft";
+    this.ctx.fillStyle = "#4D514C";
+    this.ctx.textAlign = "center";
+    this.ctx.fillText("CONGRATS",
+      this.ctx.canvas.width/2,
+      this.ctx.canvas.height/2);
+		this.ctx.closePath()
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000)
+  }
+
   clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
   }
@@ -89,6 +132,9 @@ class Game {
 			this.levelUp()
 		} else if(this.player.x >= this.ctx.canvas.width  && this.coinCount < 30){
       this.gameOver()
+    }
+    if (this.levelIndex > LEVELS.length - 1) {
+      this.congrats()
     }
   }
 
