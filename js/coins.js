@@ -8,7 +8,7 @@ class Coin {
     this.vx = -3
 
     this.img = new Image();
-    this.img.src = "/img/token/fireball.png";
+    this.img.src = "./img/token/fireball.png";
     this.img.xFrames = 60;
     this.img.yFrames = 1;
     this.img.yFrameIndex = 0;

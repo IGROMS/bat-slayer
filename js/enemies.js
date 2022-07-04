@@ -13,7 +13,7 @@ class Bat {
 		this.hasFallen = false;
 
     this.img = new Image();
-    this.img.src = "/img/Bat/bat_sprite.png";
+    this.img.src = "./img/Bat/bat_sprite.png";
 		this.img.isReady = false;
 		this.img.onload = () => {
 			this.img.isReady = true;

@@ -22,7 +22,7 @@ class Player {
 		this.strength = 1
 
     this.img = new Image();
-    this.img.src = "/img/Hero/player_sprite.png";
+    this.img.src = "./img/Hero/player_sprite.png";
     this.img.xFrames = 5;
     this.img.yFrames = 14;
     this.img.yFrameIndex = 0;
