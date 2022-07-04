@@ -64,6 +64,9 @@ class Game {
       this.ctx.canvas.width/2,
       this.ctx.canvas.height/2);
 		this.ctx.closePath()
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000)
   }
 
   clear() {
@@ -84,7 +87,9 @@ class Game {
 			this.levelIndex++
 			this.player.health = 20
 			this.levelUp()
-		}
+		} else if(this.player.x >= this.ctx.canvas.width  && this.coinCount < 30){
+      this.gameOver()
+    }
   }
 
   move() {
