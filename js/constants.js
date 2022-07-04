@@ -5,9 +5,9 @@ DOT = 190
 FLOOR = 118
 LEVELS = [
   {
-    backgroundBack: '/img/BG/BG-back.png',
-    backgroundClouds: '/img/BG/BG-cloud.png',
-    background: '/img/BG/BG-front.png',
+    backgroundBack: './img/BG/BG-back.png',
+    backgroundClouds: './img/BG/BG-cloud.png',
+    background: './img/BG/BG-front.png',
     platforms: [
       [1002, 286, 129, 96],
       [1395, 286, 160, 96],
@@ -84,9 +84,9 @@ LEVELS = [
     ]
   },
   {
-    backgroundBack: '/img/BG/level2/BG-back.png',
-    backgroundClouds: '/img/BG/BG-cloud.png',
-    background: '/img/BG/level2/BG-front.png',
+    backgroundBack: './img/BG/level2/BG-back.png',
+    backgroundClouds: './img/BG/BG-cloud.png',
+    background: './img/BG/level2/BG-front.png',
     platforms: [
       [790, 288, 161, 93],
       [992, 242, 248, 32],
